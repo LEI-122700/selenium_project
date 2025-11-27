@@ -1,13 +1,17 @@
 package iscte.ista.selenium_project;
+
 import com.codeborne.selenide.SelenideElement;
-
+import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$x;
 
-// page_url = https://www.jetbrains.com/
 public class MainPage {
-  public SelenideElement seeDeveloperToolsButton = $x("//*[@data-test-marker='Developer Tools']");
-  public SelenideElement findYourToolsButton = $x("//*[@data-test='suggestion-action']");
-  public SelenideElement toolsMenu = $x("//div[@data-test='main-menu-item' and @data-test-marker = 'Developer Tools']");
-  public SelenideElement searchButton = $("[data-test='site-header-search-action']");
+    // Botão da lupa
+    public SelenideElement searchButton = $("[data-test='site-header-search-action']");
+
+    // Menu principal (Desktop)
+    public SelenideElement toolsMenu = $(byText("Developer Tools"));
+
+    // Botões de navegação
+    public SelenideElement seeDeveloperToolsButton = $(byText("Developer Tools"));
+    public SelenideElement findYourToolsButton = $("[data-test='suggestion-link']");
 }
