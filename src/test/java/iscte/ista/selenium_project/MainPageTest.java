@@ -21,11 +21,12 @@ public class MainPageTest {
         SelenideLogger.addListener("allure", new AllureSelenide());
     }
 
-    @BeforeEach    public void setUp() {
-        open("https://www.jetbrains.com/");
-        if (mainPage.cookiesButton.is(visible, Duration.ofSeconds(2))) {
-            mainPage.cookiesButton.click();
-        }
+@BeforeEach    public void setUp() {
+    open("https://www.jetbrains.com/");
+
+    if (mainPage.acceptCookiesButton.exists()) {
+        mainPage.acceptCookiesButton.click();
+    }
     }
 
     @Test
@@ -47,7 +48,6 @@ public class MainPageTest {
 
     @Test
     public void navigationToAllTools() {
-        //mainPage.seeDeveloperToolsButton.click();
         mainPage.findYourToolsButton.click();
 
         $("#products-page").shouldBe(visible);
