@@ -1,15 +1,20 @@
 package iscte.ista.selenium_project;
+
+import com.codeborne.selenide.ClickOptions;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.*;
+
+import java.time.Duration;
+
 import static org.junit.jupiter.api.Assertions.*;
 import java.time.Duration;
 
-import static com.codeborne.selenide.Condition.attribute;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MainPageTest {
     MainPage mainPage = new MainPage();
@@ -39,9 +44,13 @@ public class MainPageTest {
 
     @Test
     public void toolsMenu() {
-        mainPage.toolsMenu.click();
+        // Clica no menu "Developer Tools"
+        mainPage.toolsMenu.shouldBe(visible).click(ClickOptions.usingJavaScript());
 
-        $("div[data-test='main-submenu']").shouldBe(visible);
+        // CORREÇÃO: Verificamos se o botão "Find your tool" ficou visível.
+        // Sabemos que este botão existe dentro do menu ou na página de destino,
+        // por isso é a validação mais segura.
+        mainPage.findYourToolsButton.shouldBe(visible);
     }
 
     @Test

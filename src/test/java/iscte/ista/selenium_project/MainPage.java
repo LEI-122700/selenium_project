@@ -1,12 +1,10 @@
 package iscte.ista.selenium_project;
-import com.codeborne.selenide.SelenideElement;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Condition.visible;
 
-// page_url = https://www.jetbrains.com/
 public class MainPage {
     public SelenideElement findYourToolsButton = $$x("//a[@href='/products/']").findBy(visible);
     public SelenideElement toolsMenu = $("[data-test='main-menu-item-action']");
