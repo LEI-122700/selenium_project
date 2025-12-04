@@ -3,7 +3,7 @@ import com.codeborne.selenide.SelenideElement;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$x;
-import static com.codeborne.selenide.Selenide.$$x; // Atenção: $$x é para coleções XPath
+import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Condition.visible;
 
 // page_url = https://www.jetbrains.com/
