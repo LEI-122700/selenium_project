@@ -19,17 +19,21 @@ public class MainPageTest {
     }
 
 @BeforeEach    public void setUp() {
-        open("https://www.jetbrains.com/");
+    open("https://www.jetbrains.com/");
+
+    if (mainPage.acceptCookiesButton.exists()) {
+        mainPage.acceptCookiesButton.click();
+    }
     }
 
     @Test
     public void search() {
         mainPage.searchButton.click();
 
-        $("[data-test='search-input']").sendKeys("Selenium");
+        $("[data-test-id='search-input']").sendKeys("Selenium");
         $("button[data-test='full-search-button']").click();
 
-        $("input[data-test='search-input']").shouldHave(attribute("value", "Selenium"));
+        $("input[data-test-id='search-input']").shouldHave(attribute("value", "Selenium"));
     }
 
     @Test
@@ -41,7 +45,6 @@ public class MainPageTest {
 
     @Test
     public void navigationToAllTools() {
-        mainPage.seeDeveloperToolsButton.click();
         mainPage.findYourToolsButton.click();
 
         $("#products-page").shouldBe(visible);
