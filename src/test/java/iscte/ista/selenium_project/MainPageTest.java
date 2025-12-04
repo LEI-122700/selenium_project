@@ -7,6 +7,10 @@ import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.*;
 
+import java.time.Duration;
+
+import static org.junit.jupiter.api.Assertions.*;
+
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -14,26 +18,27 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class MainPageTest {
     MainPage mainPage = new MainPage();
 
-    @BeforeAll
-    public static void setUpAll() {
-        Configuration.browserSize = "1920x1080";
-        Configuration.timeout = 10000;
+    @BeforeAll    public static void setUpAll() {
+        Configuration.browserSize = "1280x800";
         SelenideLogger.addListener("allure", new AllureSelenide());
     }
 
-    @BeforeEach
-    public void setUp() {
-        open("https://www.jetbrains.com/");
-        executeJavaScript("var banner = document.querySelector('.ch2-container'); if(banner) banner.remove();");
-        executeJavaScript("var banner2 = document.querySelector('div[data-test=\"banner\"]'); if(banner2) banner2.remove();");
-        executeJavaScript("var cookieOverlay = document.getElementById('onetrust-banner-sdk'); if(cookieOverlay) cookieOverlay.remove();");
+@BeforeEach    public void setUp() {
+    open("https://www.jetbrains.com/");
+
+    if (mainPage.acceptCookiesButton.exists()) {
+        mainPage.acceptCookiesButton.click();
+    }
     }
 
     @Test
     public void search() {
-        mainPage.searchButton.shouldBe(visible).click(ClickOptions.usingJavaScript());
-        $$("input").findBy(visible).setValue("Selenium").pressEnter();
-        $$("input").findBy(value("Selenium")).shouldBe(visible);
+        mainPage.searchButton.click();
+
+        $("[data-test-id='search-input']").sendKeys("Selenium");
+        $("button[data-test='full-search-button']").click();
+
+        $("input[data-test-id='search-input']").shouldHave(attribute("value", "Selenium"));
     }
 
     @Test
@@ -49,10 +54,9 @@ public class MainPageTest {
 
     @Test
     public void navigationToAllTools() {
-        mainPage.seeDeveloperToolsButton.shouldBe(visible).click(ClickOptions.usingJavaScript());
-        mainPage.findYourToolsButton.shouldBe(visible).click(ClickOptions.usingJavaScript());
+        mainPage.findYourToolsButton.click();
 
-        String title = Selenide.title();
-        assertTrue(title.contains("Tools") || title.contains("Products"));
-    }
+        $("#products-page").shouldBe(visible);
+
+        assertEquals("All Developer Tools and Products by JetBrains", Selenide.title());    }
 }
