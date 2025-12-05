@@ -10,6 +10,7 @@ import org.junit.jupiter.api.*;
 import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.*;
+import java.time.Duration;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
@@ -23,12 +24,12 @@ public class MainPageTest {
         SelenideLogger.addListener("allure", new AllureSelenide());
     }
 
-@BeforeEach    public void setUp() {
-    open("https://www.jetbrains.com/");
+    @BeforeEach    public void setUp() {
+        open("https://www.jetbrains.com/");
 
-    if (mainPage.acceptCookiesButton.exists()) {
-        mainPage.acceptCookiesButton.click();
-    }
+        if (mainPage.cookiesButton.is(visible, Duration.ofSeconds(2))) {
+            mainPage.cookiesButton.click();
+        }
     }
 
     @Test
